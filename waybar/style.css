@@ -1,0 +1,165 @@
+* {
+    border: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    min-height: 0;
+    
+}
+
+
+#battery,
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#cpu
+#memory
+#pulseaudio
+#network
+#network.disconnected {
+    padding: 4 15px;
+    margin: 0 5px;
+    color: #eceff1;
+}
+
+
+
+window#waybar {
+    background-color: rgba(43, 48, 59, 0);
+    border-bottom: 3px solid rgba(100, 114, 125, 0);
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#clock,
+#window {
+    color: #263238;
+    background-color: #eceff1;
+    border-bottom-left-radius: 17px;
+    padding-left: 30px;
+    padding-right: 30px;;
+}
+#window {
+    border-bottom-right-radius: 17px;
+    
+
+}
+#workspaces{
+    color: #cfd8dc;
+    background-color: #eceff1;
+    border-bottom-right-radius: 17px;
+    padding-right: 15px;
+    padding-left: 15px;
+    
+}
+
+
+/*
+window#waybar.empty {
+    background-color: #f53c3c;
+}
+window#waybar.solo {
+    background-color: #FFFFFF;
+}
+
+window#waybar.termite {
+    background-color: #3F3F3F;
+}
+
+window#waybar.chromium {
+    background-color: #000000;
+    border: none;
+}*/
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: #5c6b74;
+    border-bottom: 3px solid transparent;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inherit;
+    border-bottom: 3px solid #ffffff;
+}
+
+#workspaces button.focused {
+    /*background-color: #37474f;*/
+    color: #ff9800;
+}
+
+#workspaces button.urgent {
+    background-color: #ff9800;
+}
+
+
+#mode {
+    background-color: #64727D;
+    border-bottom: 3px solid #ffffff;
+}
+
+
+
+#pulseaudio.muted{
+    color: #869297;
+}
+
+
+
+#network.disconnected {
+    color: #869297;
+}
+
+
+#battery.charging {
+    /*color: #ffffff;*/
+    color: #8bc34a;
+}
+
+@keyframes blink {
+    to {
+        background-color: #f53c3c;
+        color: #ffffff;
+    }
+}
+
+#battery.warning:not(.charging){
+    color: #ff9800;
+}
+
+#battery.critical:not(.charging) {
+    color: #f53c3c;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+
+#idle_inhibitor.icon{
+    background-color: #000000;
+}
+
+
+
+#idle_inhibitor.activated {
+    color: #ff9800;
+}
