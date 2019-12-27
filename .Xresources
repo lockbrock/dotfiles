@@ -1,1 +1,120 @@
-/home/lachlan/.Xresources
+! Xft font settings - used by urxvt
+!Xft.dpi:        96
+!Xft.antialias:  true
+!Xft.rgba:       rgb
+!Xft.hinting:	true
+!Xft.hintstyle: hintslight
+
+!!!!!!!!!!!!! Colors !!!!!!!!!!!!!
+! From https://terminal.sexy/#JjI47O_xJjI4_5gAi8NK_8EHA6n06R5jAJaIz9jcN0dP_6dNnMxl_6AAgdT6rRRXJqaa7O_x
+! xcolors.next/material
+!
+! special
+*.foreground:   #eceff1
+*.background:   #263238
+*.cursorColor:  #eceff1
+
+! black
+*.color0:       #263238
+*.color8:       #37474f
+
+! red
+*.color1:       #ff9800
+*.color9:       #ffa74d
+
+! green
+*.color2:       #8bc34a
+*.color10:      #9ccc65
+
+! yellow
+*.color3:       #ffc107
+*.color11:      #ffa000
+
+! blue
+*.color4:       #03a9f4
+*.color12:      #81d4fa
+
+! magenta
+*.color5:       #e91e63
+*.color13:      #ad1457
+
+! cyan
+*.color6:       #009688
+*.color14:      #26a69a
+
+! white
+*.color7:       #cfd8dc
+*.color15:      #eceff1
+
+
+!!!!!!!!!!!! ROFI !!!!!!!!!!!!!!
+
+
+rofi.color-enabled: true
+
+!                   bg          out/l       sep.
+rofi.color-window: #eceff1,    #eceff1,    #eceff1
+
+!                  bg	        tx          bg2         sle         sltx
+rofi.color-normal: #eceff1,     #37474f,    #eceff1,    #eceff1,    #ff9800
+rofi.color-active: #eceff1,     #37474f,    #eceff1,    #eceff1,    #ff9800
+rofi.color-urgent: #273238,     #ff1844,    #273238,    #394249,    #ff1844
+
+
+
+rofi.modi:                          drun,ssh
+rofi.opacity:                       100
+rofi.width:                         20
+rofi.lines:                         10
+rofi.columns:                       1
+rofi.font:                          Deja Vu Sans 10
+rofi.bw:                            4
+rofi.padding:                       0
+rofi.fixed-num-lines:               false
+rofi.terminal:                      urxvt
+rofi.levenshtein-sort:              false
+rofi.line-margin:                   0
+rofi.yoffset:                       -540
+rofi.separator-style:               line
+rofi.hide-scrollbar:                true
+!rofi.fullscreen:                   true
+rofi.scrollbar-width:               2
+!rofi.background:                   #004c4c4c
+!rofi.fake-transparancy:            false
+!rofi.fake-background:		        background
+
+
+
+
+!!!!!!!!!!!!! URXVT !!!!!!!!!!!!!!
+/*URxvt.depth:                100*/
+URxvt.loginShell:           true
+URxvt.saveLines:            5000
+URxvt.internalBorder:       3
+URxvt.lineSpace:            0
+
+! Fonts
+URxvt.allow_bold:           true
+URxvt*font: xft:Inconsolata:pixelsize=15:Mono:antialias=true:hinting=true
+URxvt*boldFont: xft:Inconsolata:pixelsize=15:Bold:antialias=true:hinting=true
+
+! Scrollbar
+URxvt.scrollStyle:          rxvt
+URxvt.scrollBar:            false
+
+! Perl extensions
+URxvt.perl-ext-common:      default,matcher
+URxvt.matcher.button:       1
+URxvt.urlLauncher:          firefox
+
+! Cursor
+URxvt.cursorBlink:          true
+URxvt.cursorColor:          #657b83
+URxvt.cursorUnderline:      true
+
+! Pointer
+URxvt.pointerBlank:	    false
+
+
+
+
