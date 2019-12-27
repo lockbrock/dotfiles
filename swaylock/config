@@ -1,0 +1,50 @@
+image=~/Pictures/lockimage3.png
+indicator
+clock
+timestr=%I:%M%p
+datestr=%a %-d of %b
+show-failed-attempts
+
+scaling=center
+
+
+# Normal
+ring-color=ffc107
+line-color=ffc107
+separator-color=ffc107
+inside-color=eceff1           
+text-color=263238
+
+
+#clear
+inside-clear-color=eceff1     
+line-clear-color=eceff1
+
+
+# Caps lock
+inside-caps-lock-color=eceff1
+key-hl-color=eceff1
+
+
+# Verifying
+inside-ver-color=eceff1
+line-ver-color=
+
+
+# wrong
+inside-wrong-color=eceff1
+ring-wrong-color=ff0000
+line-wrong-color=ff0000
+
+
+# typing
+layout-text-color=ff0000
+
+
+
+
+
+
+
+daemonize
+
