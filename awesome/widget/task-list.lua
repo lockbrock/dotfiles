@@ -110,10 +110,10 @@ local function list_update(w, buttons, label, data, objects)
 			ibm = wibox.widget {
 				-- 12 top bottom
 				ib,
-				left = dpi(5),
-				right = dpi(5),
-				top = dpi(5),
-				bottom = dpi(5),
+				left = dpi(7),
+				right = dpi(7),
+				top = dpi(7),
+				bottom = dpi(7),
 				widget = wibox.container.margin
 			}
 			l = wibox.layout.fixed.horizontal()
@@ -170,7 +170,9 @@ local function list_update(w, buttons, label, data, objects)
 				tb:set_markup('<i>&lt;Invalid text&gt;</i>')
 			end
 		end
+		
 		bgb:set_bg(bg)
+
 		if type(bg_image) == 'function' then
 			-- TODO: Why does this pass nil as an argument?
 			bg_image = bg_image(tb, o, nil, objects, i)
@@ -182,7 +184,7 @@ local function list_update(w, buttons, label, data, objects)
 			ibm:set_margins(0)
 		end
 
-		bgb.shape = args.shape
+		bgb.shape = gears.shape.circle
 		bgb.shape_border_width = args.shape_border_width
 		bgb.shape_border_color = args.shape_border_color
 
@@ -239,7 +241,7 @@ local TaskList = function(s)
 		s,
 		awful.widget.tasklist.filter.currenttags,
 		tasklist_buttons,
-		{},
+		{spacing = dpi(3)},
 		list_update,
 		wibox.layout.fixed.horizontal()
 	)

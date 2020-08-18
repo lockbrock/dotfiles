@@ -1,5 +1,5 @@
 configuration {
-    font:                           "SF Pro Text Regular 20";
+    font:                           "SF Pro Text Regular 15";
     show-icons:                     true;
     drun-display-format:            "{name}";
     fullscreen:                     false;
@@ -94,7 +94,7 @@ listview {
     lines:                          5;
     spacing:                        4px;
     cycle:                          false;
-    dynamic:                        false;
+    dynamic:                        true;
     layout:                         vertical;
 }
 
@@ -114,7 +114,7 @@ element {
 }
 
 element-icon {
-    size:                           128px;
+    size:                           64px;
     border:                         0px;
 }
 

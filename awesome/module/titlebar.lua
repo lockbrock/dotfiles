@@ -5,7 +5,7 @@ local wibox = require("wibox")
 
 local dpi = beautiful.xresources.apply_dpi
 
-awful.titlebar.enable_tooltip = false
+awful.titlebar.enable_tooltip = true
 awful.titlebar.fallback_name  = 'Client\'s name'
 
 
@@ -14,8 +14,8 @@ local titlebar_size = beautiful.titlebar_size
 
 --  ▄▄▄▄▄▄▄   ▀      ▄    ▀▀█           █                   
 --     █    ▄▄▄    ▄▄█▄▄    █     ▄▄▄   █▄▄▄    ▄▄▄    ▄ ▄▄ 
---     █      █      █      █    █▀  █  █▀ ▀█  ▀   █   █▀  ▀
---     █      █      █      █    █▀▀▀▀  █   █  ▄▀▀▀█   █    
+--     █      █      █       █    █▀  █  █▀ ▀█  ▀   █   █▀  ▀
+--     █      █      █       █    █▀▀▀▀  █   █  ▄▀▀▀█   █    
 --     █    ▄▄█▄▄    ▀▄▄    ▀▄▄  ▀█▄▄▀  ██▄█▀  ▀▄▄▀█   █  
 
 
@@ -101,7 +101,6 @@ client.connect_signal("request::titlebars", function(c)
 					widget = wibox.container.margin
 				},
 				layout = wibox.layout.align.vertical
-				
 			}
 
 		elseif pos == 'top' or pos == 'bottom' then
@@ -113,6 +112,7 @@ client.connect_signal("request::titlebars", function(c)
 						awful.titlebar.widget.closebutton(c),
 						awful.titlebar.widget.maximizedbutton(c),
 						awful.titlebar.widget.minimizebutton (c),
+						awful.titlebar.widget.floatingbutton (c),
 						spacing = dpi(7),
 						layout  = wibox.layout.fixed.horizontal
 					},
@@ -125,9 +125,9 @@ client.connect_signal("request::titlebars", function(c)
 				},
 				{
 					{
-						awful.titlebar.widget.stickybutton(c),
-						awful.titlebar.widget.ontopbutton(c),
-						awful.titlebar.widget.floatingbutton (c),
+						--awful.titlebar.widget.stickybutton(c),
+						--awful.titlebar.widget.ontopbutton(c),
+
 						spacing = dpi(7),
 						layout  = wibox.layout.fixed.horizontal	
 					},
@@ -194,19 +194,22 @@ client.connect_signal("request::titlebars", function(c)
 		-- Isn't it neat? lol
 		decorate_titlebar(c, 'top', beautiful.gtk.get_theme_variables().bg_color:sub(1,7) .. '66', titlebar_size)
 	
-	elseif c.class == "kitty" then
+	--elseif c.class == "kitty" then
 
-		decorate_titlebar(c, 'left', '#000000AA', titlebar_size)
+	--	decorate_titlebar(c, 'left', '#000000AA', titlebar_size)
 
-	elseif c.class == 'uRxvt' or c.class == 'UXTerm' then
+	elseif c.class == 'URxvt' or c.class == 'kitty' then
 
 		-- Let's use the xresources' background color as the titlebar color for xterm
-		-- awesome is the shit boi!
 		decorate_titlebar(c, 'top', beautiful.xresources.get_current_theme().background, titlebar_size)
 
 	elseif c.class == 'Nemo' then
 
 		decorate_titlebar(c, 'left', beautiful.xresources.get_current_theme().background, titlebar_size)
+
+	elseif c.class == 'Chromium' then
+
+		decorate_titlebar(c, 'top', '#dee1e6', titlebar_size)
 
 	else
 
@@ -246,8 +249,9 @@ screen.connect_signal(
 	"arrange", 
 	function(s)
 		for _, c in pairs(s.clients) do
-
-			--if (#s.tiled_clients > 1 or c.floating) and c.first_tag.layout.name ~= 'max' then
+			if c.hide_titlebars then
+				awful.titlebar.hide(c, c.titlebar_position or 'left')
+			elseif (#s.tiled_clients > 0 or c.floating) and c.first_tag.layout.name ~= 'max' then
 
 				if not c.hide_titlebars then
 					awful.titlebar.show(c, c.titlebar_position or 'left')
@@ -266,16 +270,24 @@ screen.connect_signal(
 					end
 				end
 
-			--[[elseif (#s.tiled_clients == 1 or c.first_tag.layout.name == 'max') and not c.fullscreen then
-
+			elseif (c.first_tag.layout.name == 'max') and not c.fullscreen then
 				awful.titlebar.hide(c, c.titlebar_position or 'left')
 
 				c.shape = function(cr, w, h)
 					gears.shape.rectangle(cr, w, h)
 				end
 
-			end]]--
+			elseif (c.fullscreen) then
+				--awful.titlebar.hide(c, c.titlebar_position or 'left')
 
+				c.shape = function(cr, w, h)
+					gears.shape.rectangle(cr, w, h)
+				end
+			else
+				c.shape = function(cr, w, h)
+					gears.shape.rounded_rect(cr, w, h)
+				end
+			end
 		end
 	end
 )

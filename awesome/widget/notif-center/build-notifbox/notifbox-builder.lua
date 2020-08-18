@@ -72,51 +72,58 @@ notifbox_box = function(notif, icon, title, message, app, bgcolor)
 		end
 	}
 
-	local notifbox_template =  wibox.widget {
+	local notifbox_template = wibox.widget {
 		id = 'notifbox_template',
 		expand = 'none',
 		{
 			{
 				layout = wibox.layout.fixed.vertical,
-				spacing = dpi(5),
 				{
 					expand = 'none',
 					layout = wibox.layout.align.horizontal,
-					{
-						layout = wibox.layout.fixed.horizontal,
-						spacing = dpi(5),
-						builder.notifbox_icon(icon),
-						builder.notifbox_appname(app),
-					},
+					builder.notifbox_appname(app),
 					nil,
 					{
 						notifbox_timepop,
 						notifbox_dismiss,
 						layout = wibox.layout.fixed.horizontal
-					}
+					},
 				},
 				{
-					layout = wibox.layout.fixed.vertical,
-					spacing = dpi(5),
 					{
-						builder.notifbox_title(title),
-						builder.notifbox_message(message),
-						layout = wibox.layout.fixed.vertical
+						layout = wibox.layout.fixed.horizontal,
+						{
+							layout = wibox.layout.fixed.horizontal,
+							builder.notifbox_icon(icon),
+						},
+						{
+							layout = wibox.layout.fixed.vertical,
+							spacing = dpi(5),
+							{
+								builder.notifbox_title(title),
+								builder.notifbox_message(message),
+								layout = wibox.layout.fixed.vertical
+							},
+							builder.notifbox_actions(notif),
+						},
+						spacing = beautiful.notification_margin,
 					},
-					builder.notifbox_actions(notif),
+					right = beautiful.notification_margin,
+					widget  = wibox.container.margin,
 				},
-
+				spacing = beautiful.notification_margin,
 			},
-			margins = dpi(10),
+			margins = dpi(20),
 			widget = wibox.container.margin
 		},
 		bg = bgcolor,
 		shape = function(cr, width, height)
 			gears.shape.partially_rounded_rect(cr, width, height, true, true, true, true, beautiful.groups_radius)
 		end,
+		border_width = dpi(1),
+		border_color = '#FFFFFF' .. 'FF',
 		widget = wibox.container.background,
 	}
-
 	-- Put the generated template to a container
 	local notifbox = wibox.widget {
 		notifbox_template,
@@ -151,16 +158,16 @@ notifbox_box = function(notif, icon, title, message, app, bgcolor)
 
 	-- Add hover, and mouse leave events
 	notifbox_template:connect_signal(
-		"mouse::enter",
+		'mouse::enter',
 		function() 
-			notifbox.bg = beautiful.groups_bg
+			notifbox.bg = beautiful.groups_bg .. 'FF'
 			notifbox_timepop.visible = false
 			notifbox_dismiss.visible = true
 		end
 	)
 
 	notifbox_template:connect_signal(
-		"mouse::leave",
+		'mouse::leave',
 		function() 
 			notifbox.bg = beautiful.tranparent
 			notifbox_timepop.visible = true

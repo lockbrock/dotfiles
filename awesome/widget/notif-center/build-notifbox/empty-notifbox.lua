@@ -1,5 +1,3 @@
--- This returns the "Wow, such empty." message.
-
 local wibox = require('wibox')
 
 local dpi = require('beautiful').xresources.apply_dpi
@@ -25,21 +23,14 @@ local empty_notifbox = wibox.widget {
 			nil
 		},
 		{
-			text = 'Wow, such empty.',
-			font = 'SF Pro Text Bold 14',
-			align = 'center',
-			valign = 'center',
-			widget = wibox.widget.textbox
-		},
-		{
-			text = 'Come back later.',
-			font = 'SF Pro Text Regular 10',
+			text = 'No notifications',
+			font = 'Inter Bold 12',
 			align = 'center',
 			valign = 'center',
 			widget = wibox.widget.textbox
 		},
 	},
-	margins = dpi(20),
+	margins = dpi(10),
 	widget = wibox.container.margin
 
 }
@@ -54,8 +45,9 @@ local separator_for_empty_msg =  wibox.widget
 
 -- Make empty_notifbox center
 local centered_empty_notifbox = wibox.widget {
-	expand = 'none',
 	layout = wibox.layout.align.vertical,
+	forced_height = dpi(620),
+	expand = 'none',
 	separator_for_empty_msg,
 	empty_notifbox,
 	separator_for_empty_msg

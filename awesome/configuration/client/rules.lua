@@ -29,7 +29,20 @@ ruled.client.connect_signal(
 				keys = client_keys,
 				buttons = client_buttons,
 				screen    = awful.screen.preferred,
-				placement = awful.placement.no_overlap + awful.placement.no_offscreen
+				placement = awful.placement.centered
+
+				--placement = awful.placement.no_overlap + awful.placement.no_offscreen
+			}
+		}
+
+		ruled.client.append_rule {
+			id = "dialog",
+			rule_any = {
+				class = { "rofi" }
+			},
+			properties = {
+				titlebars_enabled = false,
+				skip_decoration = true,
 			}
 		}
 
@@ -71,17 +84,17 @@ ruled.client.connect_signal(
 				placement = awful.placement.centered
 			}
 		}
-		-- Pavucontrol
+		-- Audio popups
 		ruled.client.append_rule {
 			id         = "audio",
 			rule_any   = { 
-				class = { "Pavucontrol"}
+				class = { "Pavucontrol", "Blueman-manager", "Blueman-assistant", "Blueman-applet"}
 			},
 			properties = { 
-				titlebars_enabled = false,
+				titlebars_enabled = true,
 				floating = true,
 				hide_titlebars = true,
-				draw_backdrop = false,
+				--draw_backdrop = false,
 				skip_decoration = true,
 				ontop = true,
 				placement = awful.placement.centered
@@ -128,34 +141,28 @@ ruled.client.connect_signal(
 		}
 
 		-- terminal emulators
-		--[[ruled.client.append_rule {
+		ruled.client.append_rule {
 			id         = "terminals",
 			rule_any   = { 
 				class = { 
 					"URxvt",
-					"XTerm",
-					"UXTerm",
-					"kitty",
-					"K3rmit"
 				}
 			},
 			except_any = {
 				instance = { "QuakeTerminal" }
 			},
 			properties = {
-				tag = '1',
-				switchtotag = true,
-				draw_backdrop = false,
-				size_hints_honor = false
+				--draw_backdrop = false,
+				--size_hints_honor = false
 			}
-		}]]--
+		}
 
 		-- Browsers
 		ruled.client.append_rule {
 			id         = "web_browsers",
 			rule_any   = { 
 				class = {
-					"firefox",
+					"Chromium",
 					"discord",
 				}
 			},
@@ -220,6 +227,7 @@ ruled.client.connect_signal(
 			rule_any   = {  
 				class = {
 					"Steam",
+					"Slay the Spire"
 				},
 			name = { "Steam" }
 			},

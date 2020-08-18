@@ -1,37 +1,48 @@
 local wibox = require('wibox')
-local dpi = require('beautiful').xresources.apply_dpi
+local gears = require('gears')
+local beautiful = require('beautiful')
+local dpi = beautiful.xresources.apply_dpi
 
 local notif_header = wibox.widget {
-	text   = 'Notification Center',
-	font   = 'SF Pro Text Bold 16',
+	text   = 'Notifications',
+	font   = 'Inter Bold 14',
 	align  = 'left',
-	valign = 'bottom',
+	valign = 'center',
 	widget = wibox.widget.textbox
 }
 
 local notif_center = function(s)
 
-	s.dont_disturb = require('widget.notif-center.dont-disturb')
 	s.clear_all = require('widget.notif-center.clear-all')
 	s.notifbox_layout = require('widget.notif-center.build-notifbox').notifbox_layout
 
 	return wibox.widget {
-		expand = 'none',
-		layout = wibox.layout.fixed.vertical,
-		spacing = dpi(10),
 		{
-			expand = 'none',
-			layout = wibox.layout.align.horizontal,
-			notif_header,
-			nil,
 			{
-				layout = wibox.layout.fixed.horizontal,
-				spacing = dpi(5),
-				s.dont_disturb,
-				s.clear_all
+				expand = 'none',
+				layout = wibox.layout.fixed.vertical,
+				spacing = dpi(10),
+				{
+					layout = wibox.layout.align.horizontal,
+					expand = 'none',
+					notif_header,
+					nil,
+					s.clear_all
+				},
+				s.notifbox_layout
 			},
+			margins = dpi(10),
+			widget = wibox.container.margin
 		},
-		s.notifbox_layout
+		border_width = 1,
+		border_color = beautiful.system_white_dark .. 'AA',
+		bg = beautiful.system_grey .. '00',
+		shape = function(cr, w, h)
+			gears.shape.rounded_rect(cr, w, h, beautiful.groups_radius)
+		end,
+		minimum_height = dpi(650),
+		--maximum_height = dpi(s.geometry.height - 300),
+		widget = wibox.container.background
 	}
 end
 

@@ -21,7 +21,7 @@ local capture_intruder = true  											-- Capture a picture using webcam
 local face_capture_dir = '/home/lachlan/Pictures/Intruders/'	  		-- Save location, auto creates
 
 -- Background Mode Configuration
-local background_mode = 'blur'											-- Available background mode: `image`, `blur`, `root`, `bg_color`
+local background_mode = 'image'											-- Available background mode: `image`, `blur`, `root`, `bg_color`
 local wall_dir = config_dir .. 'theme/wallpapers/'						-- Wallpaper directory
 local default_wall_name = 'default.jpg'									-- Default wallpaper
 local tmp_wall_dir = '/tmp/awesomewm/' .. os.getenv('USER') .. '/'		-- /tmp directory
@@ -354,7 +354,7 @@ local locker = function(s)
 		)
 	end
 
-	check_webcam()
+	--check_webcam()
 
 	local intruder_capture = function()
 		local capture_image = [[
@@ -362,25 +362,19 @@ local locker = function(s)
 		save_dir=]] .. face_capture_dir .. [[
 		date=$(date +%Y%m%d_%H%M%S)
 		file_loc=${save_dir}SUSPECT-${date}.png
-
 		if [ ! -d $save_dir ]; then
 			mkdir -p $save_dir;
 		fi
-
-		ffmpeg -f video4linux2 -s 800x600 -i /dev/video0 -ss 0:0:2 -frames 1 ${file_loc}
-
-		canberra-gtk-play -i camera-shutter &
+		ffmpeg -f video4linux2 -s 800x600 -i /dev/video0 -ss 0:0:2 -frames 1 ${file_loc};
+		canberra-gtk-play -i camera-shutter;
 		echo ${file_loc}
-
 		]]
 
-		-- Capture the filthy intruder face
 		awful.spawn.easy_async_with_shell(
 			capture_image, 
 			function(stdout)
 				circle_container.bg = beautiful.groups_title_bg
 
-				-- Humiliate the intruder by showing his/her hideous face
 				wanted_image:set_image(stdout:gsub('%\n',''))
 				wanted_poster.visible= true
 				wanted_msg:set_markup(msg_table[math.random(#msg_table)])
@@ -401,7 +395,7 @@ local locker = function(s)
 		)
 	end
 
-	local stoprightthereyoucriminalscum = function()
+	local wrongPassword = function()
 
 		circle_container.bg = red .. 'AA'
 
@@ -419,7 +413,7 @@ local locker = function(s)
 	end
 
 
-	local generalkenobi_ohhellothere = function()
+	local unlockComputer = function()
 		
 		circle_container.bg = green .. 'AA'
 
@@ -465,10 +459,6 @@ local locker = function(s)
 		)
 	end
 
-	-- A backdoor
-	local back_door = function()
-		generalkenobi_ohhellothere()
-	end
 
 	local password_grabber = awful.keygrabber {
 		auto_start          = true,
@@ -483,17 +473,6 @@ local locker = function(s)
 
 	            end
 	        },
-	        awful.key {
-	            modifiers = {'Mod1', 'Mod4', 'Shift', 'Control'},
-	            key       = 'Return',
-	            on_press  = function(self)
-					if not type_again then
-						return
-					end
-	            	self:stop()
-	            	back_door() 
-	        	end
-	        }
 	    },
 		keypressed_callback = function(self, mod, key, command) 
 
@@ -549,10 +528,9 @@ local locker = function(s)
 				if pam_auth then
 					-- Come in!
 					self:stop()
-					generalkenobi_ohhellothere()
+					unlockComputer()
 				else
-					-- F*ck off, you [REDACTED]!
-					stoprightthereyoucriminalscum()
+					wrongPassword()
 				end
 
 				type_again = false

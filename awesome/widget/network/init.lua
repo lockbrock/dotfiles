@@ -15,6 +15,7 @@ local awful = require('awful')
 local wibox = require('wibox')
 local gears = require('gears')
 local naughty = require('naughty') 
+local beautiful = require('beautiful')
 
 local dpi = require('beautiful').xresources.apply_dpi
 
@@ -24,7 +25,7 @@ local clickable_container = require('widget.clickable-container')
 local config_dir = gears.filesystem.get_configuration_dir()
 local widget_icon_dir = config_dir .. 'widget/network/icons/'
 
-local wlan_interface = 'wlp3s0'
+local wlan_interface = 'wlp1s0'
 local lan_interface = 'enp0s25'
 
 local return_button = function()
@@ -307,6 +308,7 @@ local return_button = function()
 
 	awful.tooltip(
 		{
+			
 			objects = {widget_button},
 			mode = 'outside',
 			align = 'right',
@@ -315,8 +317,7 @@ local return_button = function()
 					if conn_status == 'wireless' then
 						return 'Wireless Interface: <b>' .. wlan_interface .. 
 						'</b>\nConnected to: <b>' .. (essid or "*LOADING...*") .. 
-						'</b>\nWiFi-Strength: <b>' .. tostring(wifi_strength) .. '%' ..
-						'</b>\nBit rate: <b>' .. tostring(net_speed) .. '</b>'
+						'</b>\nWiFi-Strength: <b>' .. tostring(wifi_strength) .. '%'
 					else
 						return 'Ethernet Interface: <b>' .. lan_interface
 					end
@@ -324,9 +325,11 @@ local return_button = function()
 					return 'Network is currently disconnected'
 				end
 			end,
-			preferred_positions = {'left', 'right', 'top', 'bottom'},
+			fg = beautiful.widget_fg,
 			margin_leftright = dpi(8),
-			margin_topbottom = dpi(8)
+			margin_topbottom = dpi(8),
+			preferred_positions = {'top', 'left', 'right', 'bottom'},
+			preferred_alignments = {'middle', 'front', 'back'}
 		}
 	)
 

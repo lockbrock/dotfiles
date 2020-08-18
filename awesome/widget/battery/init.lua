@@ -3,6 +3,7 @@ local wibox = require('wibox')
 local awful = require('awful')
 local gears = require('gears')
 local naughty = require('naughty')
+local beautiful = require('beautiful')
 
 local watch = awful.widget.watch
 
@@ -77,14 +78,16 @@ local return_button = function()
 		text = 'None',
 		mode = 'outside',
 		align = 'right',
+		fg = beautiful.widget_fg,
 		margin_leftright = dpi(8),
 		margin_topbottom = dpi(8),
-		preferred_positions = {'right', 'left', 'top', 'bottom'}
+		preferred_positions = {'top', 'left', 'right', 'bottom'},
+		preferred_alignments = {'middle', 'front', 'back'}
 	}
 
 	-- Get battery info script
 	local get_battery_info = function()
-		awful.spawn.easy_async_with_shell('upower -i $(upower -e | grep BAT)', function(stdout)
+		awful.spawn.easy_async_with_shell('upower -i $(upower -e | grep BAT) | grep time', function(stdout)
 
 			if (stdout == nil or stdout == '') then
 				battery_tooltip:set_text('No battery detected!')
@@ -120,8 +123,8 @@ local return_button = function()
         naughty.notification ({
             icon = widget_icon_dir .. 'battery-alert.svg',
             app_name = 'System notification',
-            title = 'Battery is dying!',
-            message = 'Hey, I think we have a problem here. Save your work before reaching the oblivion.',
+            title = 'Battery is critically low!',
+            message = 'Battery is low. Plug in a charger now.',
             urgency = 'critical'
         })
     end
@@ -135,7 +138,7 @@ local return_button = function()
 			local battery_percentage = tonumber(stdout)
 
 			battery_widget.spacing = dpi(5)
-			battery_percentage_text.visible = true
+			battery_percentage_text.visible = false
 			battery_percentage_text:set_text(battery_percentage .. '%')
 
 			local icon_name = 'battery'
@@ -152,10 +155,10 @@ local return_button = function()
 						notify_critcal_battery = false
 						show_battery_warning()
 					end
-				 
+
 				elseif battery_percentage > 10 and battery_percentage < 20 then
 
-					icon_name = icon_name .. '-' .. '10'
+					icon_name = icon_name .. '-' .. 'alert'
 
 				elseif battery_percentage >= 20 and battery_percentage < 30 then
 
@@ -227,7 +230,7 @@ local return_button = function()
 			end
 
 			-- Debugger ;)
-			-- naughty.notification({message=widget_icon_dir .. icon_name .. '.svg'})
+			--naughty.notification({message=widget_icon_dir .. icon_name .. '.svg'})
 
 			battery_imagebox.icon:set_image(gears.surface.load_uncached(widget_icon_dir .. icon_name .. '.svg'))
 

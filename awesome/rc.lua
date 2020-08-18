@@ -38,7 +38,7 @@ require('module.decorate-client')
 require('module.exit-screen')
 require('module.quake-terminal')
 require('module.titlebar')
---require('module.menu')
+require('module.menu')
 require('module.volume-osd')
 require('module.brightness-osd')
 --require('module.dynamic-wallpaper')
@@ -105,7 +105,7 @@ client.connect_signal(
 
 
 local function move_mouse_onto_focused_client(c)
-    if mouse.object_under_pointer() ~= c then
+	if mouse.object_under_pointer() ~= c then
         local geometry = c:geometry()
         local x = geometry.x + geometry.width/2
         local y = geometry.y + geometry.height/2

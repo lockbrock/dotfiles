@@ -18,11 +18,12 @@ ui_noti_builder.notifbox_icon = function(ico_image)
 		{
 			id = 'icon',
 			resize = true,
-			forced_height = dpi(25),
-			forced_width = dpi(25),
+			forced_height = dpi(32),
+			forced_width = dpi(32),
 			widget = wibox.widget.imagebox
 		},
-		layout = wibox.layout.fixed.horizontal
+		margins = 0,
+		widget  = wibox.container.margin,
 	}
 	noti_icon.icon:set_image(ico_image)
 	return noti_icon
@@ -32,7 +33,7 @@ end
 ui_noti_builder.notifbox_title = function(title)
 	return wibox.widget {
 		markup = title,
-		font   = 'SF Pro Text Bold 12',
+		font   = 'SF Pro Text Regular 11',
 		align  = 'left',
 		valign = 'center',
 		widget = wibox.widget.textbox
@@ -43,8 +44,8 @@ end
 ui_noti_builder.notifbox_message = function(msg)
 	return wibox.widget {
 		markup = msg,
-		font   = 'SF Pro Text Regular 11',
 		align  = 'left',
+		font   = 'SF Pro Text Regular 11',
 		valign = 'center',
 		widget = wibox.widget.textbox
 	}
@@ -53,11 +54,14 @@ end
 -- Notification app name container
 ui_noti_builder.notifbox_appname = function(app)
 	return wibox.widget {
-		markup  = app,
-		font   = 'SF Pro Text Bold 12',
-		align  = 'left',
-		valign = 'center',
-		widget = wibox.widget.textbox
+		{
+			markup  = app,
+			font   = 'SF Pro Bold 12',
+			align  = 'center',
+			widget = wibox.widget.textbox
+		},
+		margin = beautiful.notification_margin,
+		widget = wibox.container.margin,
 	}
 end
 
@@ -75,14 +79,14 @@ ui_noti_builder.notifbox_actions = function(n)
 					{
 						{
 							id     = 'text_role',
-							font   = 'SF Pro Text Regular 10',
+							font   = 'Inter Regular 11',
 							widget = wibox.widget.textbox
 						},
 						widget = wibox.container.place
 					},
 					widget = clickable_container
 				},
-				bg                 = beautiful.groups_bg,
+				bg                 = beautiful,
 				shape              = gears.shape.rounded_rect,
 				forced_height      = 30,
 				widget             = wibox.container.background
@@ -106,7 +110,7 @@ ui_noti_builder.notifbox_dismiss = function()
             id = 'dismiss_icon',
             image = widget_icon_dir .. 'delete.svg',
             resize = true,
-            forced_height = dpi(5),
+            forced_height = dpi(10),
             widget = wibox.widget.imagebox
         },
         layout = wibox.layout.fixed.horizontal
@@ -115,7 +119,7 @@ ui_noti_builder.notifbox_dismiss = function()
     local dismiss_button = wibox.widget {
     	{
     		dismiss_imagebox,
-    		margins = dpi(5),
+    		margins = dpi(0),
     		widget = wibox.container.margin
     	},
     	widget = clickable_container

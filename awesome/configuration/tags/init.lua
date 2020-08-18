@@ -8,13 +8,13 @@ local tags = {
 	{
 		icon = icons.terminal,
 		type = 'terminal',
-		default_app = 'kitty',
+		default_app = 'urxvt',
 		screen = 1
 	},
 	{
 		icon = icons.web_browser,
 		type = 'chrome',
-		default_app = 'firefox',
+		default_app = 'chromium',
 		screen = 1
 	},
 	{
@@ -70,11 +70,10 @@ local tags = {
 
 tag.connect_signal("request::default_layouts", function()
     awful.layout.append_default_layouts({
-		awful.layout.suit.spiral.dwindle,
 		awful.layout.suit.tile,
 		--awful.layout.suit.max
 		awful.layout.suit.floating,
-    })
+	})
 end)
 
 
@@ -84,8 +83,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			i,
 			{
 				icon = tag.icon,
-				icon_only = true,
-				layout = awful.layout.suit.spiral.dwindle,
+				icon_only = false,
+				layout = awful.layout.suit.tile,
 				gap_single_client = true,
 				gap = beautiful.useless_gap,
 				screen = s,

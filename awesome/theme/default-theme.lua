@@ -39,7 +39,7 @@ local awesome_overrides = function(theme)
 	theme.title_font = 'SF Pro Text Bold 14'
 
 
-	theme.fg_normal = '#ffffffde'
+	theme.fg_normal = '#ffffffff'
 	theme.fg_focus = '#e4e4e4'
 	theme.fg_urgent = '#CC9393'
 
@@ -59,8 +59,8 @@ local awesome_overrides = function(theme)
 	theme.titlebar_size = dpi(34)
 	theme.titlebar_bg_focus = beautiful.gtk.get_theme_variables().bg_color:sub(1,7) .. '66'
 	theme.titlebar_bg_normal = beautiful.gtk.get_theme_variables().base_color:sub(1,7) .. '66'
-	theme.titlebar_fg_focus = beautiful.gtk.get_theme_variables().fg_color .. '00'
-	theme.titlebar_fg_normal = beautiful.gtk.get_theme_variables().fg_color .. '00'
+	theme.titlebar_fg_focus = beautiful.gtk.get_theme_variables().fg_color .. 'ff'
+	theme.titlebar_fg_normal = beautiful.gtk.get_theme_variables().fg_color .. 'ff'
 
 	-- Close Button
 	theme.titlebar_close_button_normal = tip .. "close_normal.svg"
@@ -129,7 +129,7 @@ local awesome_overrides = function(theme)
 	-- UI Groups
 
 	theme.groups_title_bg = "#ffffff" .. "15"
-	theme.groups_bg = "#ffffff" .. "10"
+	theme.groups_bg = "#cecece" .. "aa"
 	theme.groups_radius = dpi(9)
 
 	-- Client Decorations
@@ -142,8 +142,8 @@ local awesome_overrides = function(theme)
 	theme.border_radius = dpi(0)
 
 	-- Decorations
-	theme.client_radius = dpi(9)
-	theme.useless_gap = dpi(10)
+	theme.client_radius = dpi(10)
+	theme.useless_gap = dpi(15)
 
 	-- Menu
 	theme.menu_font = "SF Pro Text Regular 11"
@@ -156,12 +156,15 @@ local awesome_overrides = function(theme)
 
 	theme.menu_bg_normal =  theme.background:sub(1,7) .. '33'
 	theme.menu_fg_normal = '#ffffff'
+	theme.menu_fg_dark = '#000000'
 	theme.menu_fg_focus = '#ffffff'
 	theme.menu_border_color = theme.background:sub(1,7) .. '5C'
 
 	-- Tooltips
-
-	theme.tooltip_bg = theme.background
+	theme.widget_background = theme.system_black_light
+	theme.widget_fg = theme.system_white_light
+	theme.tooltip_fg = theme.widget_fg
+	theme.tooltip_bg = theme.widget_background
 	theme.tooltip_border_color = theme.transparent
 	theme.tooltip_border_width = 0
 	theme.tooltip_gaps = dpi(5)
@@ -183,16 +186,16 @@ local awesome_overrides = function(theme)
 	-- Taglist
 
 	theme.taglist_bg_empty = theme.background .. '99'
-	theme.taglist_bg_occupied =  '#ffffff' .. '1A'
-	theme.taglist_bg_urgent = "#E91E63" .. '99'
-	theme.taglist_bg_focus = theme.background
+	theme.taglist_bg_occupied =  '#ffffff' .. '1F'
+	theme.taglist_bg_urgent = "#E91E63" .. 'AA'
+	theme.taglist_bg_focus = theme.accent .. '99'
 	theme.taglist_spacing = dpi(0)
 
 	-- Tasklist
 
 	theme.tasklist_font = 'SF Pro Text Regular 10'
-	theme.tasklist_bg_normal = theme.background .. '99'
-	theme.tasklist_bg_focus = theme.background
+	theme.tasklist_bg_normal = theme.background .. 'ff'
+	theme.tasklist_bg_focus = theme.system_white_light .. '55'
 	theme.tasklist_bg_urgent = "#E91E63" .. '99'
 	theme.tasklist_fg_focus = '#DDDDDD'
 	theme.tasklist_fg_urgent = "#ffffff"
@@ -203,11 +206,12 @@ local awesome_overrides = function(theme)
 	theme.notification_position = 'top_right'
 	theme.notification_bg = theme.transparent
 	theme.notification_margin = dpi(5)
-	theme.notification_border_width = dpi(0)
-	theme.notification_border_color = theme.transparent
+	theme.notification_border_width = dpi(1)
+	theme.notification_border_color = theme.border_focus
 	theme.notification_spacing = dpi(0)
 	theme.notification_icon_resize_strategy = 'center'
 	theme.notification_icon_size = dpi(32)
+	theme.notification_width = dpi(20)
 	
 	-- Client Snap Theme
 

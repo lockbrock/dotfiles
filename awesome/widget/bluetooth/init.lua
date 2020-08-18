@@ -8,6 +8,7 @@ local awful = require('awful')
 local gears = require('gears')
 local naughty = require('naughty')
 local wibox = require('wibox')
+local beautiful = require('beautiful')
 
 local watch = awful.widget.watch
 local dpi = require('beautiful').xresources.apply_dpi
@@ -58,11 +59,14 @@ local return_button = function()
 	local bluetooth_tooltip = awful.tooltip
 	{
 		objects = {widget_button},
+		text = 'None',
 		mode = 'outside',
 		align = 'right',
+		fg = beautiful.widget_fg,
 		margin_leftright = dpi(8),
 		margin_topbottom = dpi(8),
-		preferred_positions = {'right', 'left', 'top', 'bottom'}
+		preferred_positions = {'top', 'left', 'right', 'bottom'},
+		preferred_alignments = {'middle', 'front', 'back'}
 	}
 
 	watch(

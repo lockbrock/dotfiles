@@ -2,11 +2,14 @@ local awful = require('awful')
 local gears = require('gears')
 
 require('awful.autofocus')
+local naughty = require('naughty') 
 
 local modkey = require('configuration.keys.mod').modKey
 local altkey = require('configuration.keys.mod').altKey
 
 local dpi = require('beautiful').xresources.apply_dpi
+
+
 
 local clientKeys =
 	awful.util.table.join(
@@ -44,39 +47,6 @@ local clientKeys =
 		{description = 'close', group = 'client'}
 	),
 	-- Default client focus
-	awful.key(
-		{modkey},
-		'd',
-		function()
-			awful.client.focus.byidx(1)
-		end,
-		{description = 'focus next by index', group = 'client'}
-	),
-	awful.key(
-		{modkey},
-		'a',
-		function()
-			awful.client.focus.byidx(-1)
-		end,
-		{description = 'focus previous by index', group = 'client'}
-	),
-	awful.key(
-		{ modkey, "Shift"  },
-		"d",
-		function ()
-			awful.client.swap.byidx(1)
-		end,
-		{description = "swap with next client by index", group = "client"}
-	),
-	awful.key(
-		{ modkey, "Shift" },
-		"a",
-		function ()
-			awful.client.swap.byidx(-1)
-		end,
-		{description = "swap with next client by index", group = "client"}
-	),
-
 	awful.key(
 		{modkey}, 
 		'u', 
@@ -261,7 +231,19 @@ local clientKeys =
 			end
 		end,
 		{description = 'decrease floating client size horizontally by 10 px right', group = 'client'}
-	)
+	),
+	awful.key(
+        {modkey},
+		'=',
+		function(c)
+			local geometry = c:geometry()
+			local x = geometry.x + geometry.width/2
+			local y = geometry.y + geometry.height/2
+			mouse.coords({x = x, y = y}, true)				
+		end,
+        {description = 'center the mouse in the middle of the current window', group = 'Utility'}
+    )
 )
+
 
 return clientKeys

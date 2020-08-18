@@ -21,7 +21,7 @@ local function render_client(client, mode)
 	if client.rendering_mode == 'maximized' then
 		client.border_width = 0
 		client.shape = function(cr, w, h)
-			gears.shape.rectangle(cr, w, h)
+			gears.shape.rounded_rect(cr, w, h)
 		end
 	elseif client.rendering_mode ~= 'maximized' then
 		client.border_width = beautiful.border_width
@@ -50,7 +50,7 @@ local function changes_on_screen(current_screen)
 	if (tag_is_max or #clients_to_manage == 1) then
 		current_screen.client_mode = 'maximized'
 	else
-		current_screen.client_mode = 'dwindle'
+		current_screen.client_mode = 'tile'
 	end
 
 	for _, client in pairs(clients_to_manage) do

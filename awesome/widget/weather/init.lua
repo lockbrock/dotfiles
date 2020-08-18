@@ -91,7 +91,7 @@ local refresh_widget = wibox.widget {
 local weather_desc_temp = wibox.widget {
 	{
 		id 	   = 'description',
-		markup = 'dust and clouds, -1000°C',
+		markup = 'Not available.',
 		font   = 'SF Pro Text Bold 12',
 		align  = 'left',
 		valign = 'center',
@@ -111,7 +111,7 @@ local weather_desc_temp = wibox.widget {
 local weather_location = wibox.widget {
 	{
 		id 	   = 'location',
-		markup = 'Earth, Milky Way',
+		markup = 'Location not found.',
 		font   = 'SF Pro Text Regular 12',
 		align  = 'left',
 		valign = 'center',
@@ -269,8 +269,8 @@ awesome.connect_signal(
 
 					awesome.emit_signal("widget::weather_update", 
 						icon_code, 
-						'dust and clouds, -1000°C', 
-						'Earth, Milky Way', 
+						'Not Found.', 
+						'Location not found.', 
 						'00:00', 
 						'00:00', 
 						'00:00'

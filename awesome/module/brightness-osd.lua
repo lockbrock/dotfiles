@@ -35,9 +35,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			id 					= 'bri_osd_slider',
 			bar_shape           = gears.shape.rounded_rect,
 			bar_height          = dpi(2),
-			bar_color           = '#ffffff20',
-			bar_active_color	= '#f2f2f2EE',
-			handle_color        = '#ffffff',
+			bar_color           = beautiful.system_white_light .. '33',
+			bar_active_color	= beautiful.system_white_light .. 'ff',
+			handle_color        = beautiful.system_white_light .. 'ff',
 			handle_shape        = gears.shape.circle,
 			handle_width        = dpi(15),
 			handle_border_color = '#00000012',
@@ -59,7 +59,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
 			local brightness_level = bri_osd_slider:get_value()
 			
-			spawn('light -S ' .. math.max(brightness_level, 5), false)
+			spawn('light -S ' .. math.max(brightness_level, 0), false)
 
 			-- Update textbox widget text
 			osd_value.text = brightness_level .. '%'
@@ -166,7 +166,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			right = dpi(24),
 			widget = wibox.container.margin
 	  	},
-	  	bg = beautiful.background,
+	  	bg = beautiful.system_black_light,
 		shape = gears.shape.rounded_rect,
 		widget = wibox.container.background()
 	}

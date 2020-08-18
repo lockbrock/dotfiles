@@ -12,7 +12,7 @@
 # -- @script snap
 # ----------------------------------------------------------------------------
 
-screenshot_dir=$(xdg-user-dir PICTURES)/Screenshots/
+screenshot_dir=/home/lachlan/Pictures/Screenshots/
 
 # Check save directory
 # Create it if it doesn't exist
@@ -87,7 +87,7 @@ function shot() {
 	naughty.notification ({
 		app_name = 'Screenshot Tool',
 		icon = '${file_loc}',
-		timeout = 10,
+		timeout = 5,
 		title = '<b>Snap!</b>',
 		message = '${notif_message}',
 		actions = { open_image, open_folder, delete_image }

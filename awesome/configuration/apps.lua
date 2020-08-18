@@ -7,7 +7,7 @@ return {
 
 	-- The default applications that we will use in keybindings and widgets
 	default = {
-		terminal 					= 'urxvt',																-- Terminal Emulator
+		terminal 					= 'kitty',																-- Terminal Emulator
 		text_editor 				= 'subl3',                      	            						-- GUI Text Editor
 		web_browser 				= 'firefox',                        	        						-- Web browser
 		file_manager 				= 'dolphin',                            	  	 	 					-- GUI File manager
@@ -16,7 +16,7 @@ return {
 		power_manager 				= 'xfce4-power-manager',												-- Power manager
 		package_manager 			= 'pamac-manager',														-- GUI Package manager
 		lock 						= 'awesome-client "awesome.emit_signal(\'module::lockscreen_show\')"',	-- Lockscreen
-		quake 						= 'urxvt -name QuakeTerminal',       			    					-- Quake-like Terminal
+		quake 						= 'kitty --name QuakeTerminal',       			    					-- Quake-like Terminal
 
 		rofiglobal					= 'rofi -dpi ' .. screen.primary.dpi .. 
 										' -show "Global Search" -modi "Global Search":' .. config_dir .. 
@@ -38,30 +38,30 @@ return {
 	run_on_start_up = {
 
 		'picom -b --experimental-backends --dbus --config ' .. 
-		config_dir .. '/configuration/picom.conf',   																			-- Compositor
+		'/home/lachlan/.config/awesome/configuration/picom.conf',   								-- Compositor
 
-		'blueman-appl0et',                                           	      								                    -- Bluetooth tray icon
-		--'mpd',                                                          	          										    -- Music Server
-		'xfce4-power-manager',                                              	                    					    	-- Power manager
+		'blueman-applet',                                           	      						-- Bluetooth tray icon
 		'/usr/lib/polkit-kde-authentication-agent-1 &' .. 
-		' eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)', 	          									-- Credential manager
+		' eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)', 	          		-- Credential manager
 		
-		'xrdb $HOME/.config/.Xresources',                                                   	                						-- Load X Colors
-		'nm-applet',                                                                    	            						-- NetworkManager Applet
-		'pulseeffects --gapplication-service',                                              	        						-- Sound Equalizer
+		'xrdb -load $HOME/.config/.Xresources',															-- Load X Colors
+		'nm-applet',                                                                    	        -- NetworkManager Applet
 		[[
 		xidlehook --not-when-fullscreen --not-when-audio --timer 600 \
 		"awesome-client 'awesome.emit_signal(\"module::lockscreen_show\")'" ""
-		]]																														-- Auto lock timer 
+		]],																							-- Auto lock timer 
 
-		-- You can add more start-up applications here
+		'xss-lock awesome-client "awesome.emit_signal(\'module::lockscreen_show\')"',				-- Set lockscreen on acpi events
+
+		'pulseaudio-dlna',																			-- Start pulseaudio with dlna support
+		''
 	},
 
 	-- List of binaries/shell scripts that will execute a certain task
 
 	bins = {
-		full_screenshot = bin_dir .. 'snap full',              					                    							-- Full Screenshot
-		area_screenshot = bin_dir .. 'snap area',			                                        							-- Area Selected Screenshot
-		update_profile  = bin_dir .. 'profile-image'																			-- Update profile picture
+		full_screenshot = bin_dir .. 'snap full',              					                    -- Full Screenshot
+		area_screenshot = bin_dir .. 'snap area',			                                        -- Area Selected Screenshot
+		update_profile  = bin_dir .. 'profile-image'												-- Update profile picture
 	}
 }

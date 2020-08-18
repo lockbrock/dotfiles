@@ -1,7 +1,7 @@
 local gears = require('gears')
 local spawn = require('awful.spawn')
 local app = require('configuration.apps').default.quake
--- local awful = require('awful')
+local awful = require('awful')
 
 local quake_id = 'notnil'
 local quake_client
@@ -57,7 +57,7 @@ client.connect_signal(
 			c.shape = function(cr, w, h)
 				gears.shape.rectangle(cr, w, h)
 			end
-		-- awful.placement.top(c)
+		awful.placement.top(c)
 		end
 	end
 )

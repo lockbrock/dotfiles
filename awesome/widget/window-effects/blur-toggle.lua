@@ -86,6 +86,11 @@ local toggle_blur = function(togglemode)
 	esac
 	"]]
 
+	local v = [[ bash -c "
+		echo ]] .. toggle_blur_script .. [[ > /tmp/test
+	
+	"]]
+	awful.spawn.with_shell(v)
 	-- Run the script
 	awful.spawn.with_shell(toggle_blur_script)
 

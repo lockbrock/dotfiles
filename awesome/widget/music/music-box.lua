@@ -19,6 +19,14 @@ local music_func = {}
 
 screen.connect_signal("request::desktop_decoration", function(s)
 
+	--[[
+		TODO: 
+		- Update image with album cover
+		- Update music status
+		- 
+	]]
+
+
 	-- Set music box geometry
 	local music_box_margin = dpi(5)
 	local music_box_height = dpi(375)
@@ -166,6 +174,6 @@ end)
 
 music_func.toggle_music_box = toggle_music_box
 
-local mpd_updater = require('widget.music.mpd-music-updater')
+local mpd_updater = require('widget.music.spotify-music-updater')
 
 return music_func 

@@ -13,9 +13,9 @@ local tag_list = require('widget.tag-list')
 
 local bottom_panel = function(s)
 
-	local panel_height = 48
+	local panel_height = 52
 	local panel_y = (s.geometry.y + s.geometry.height) - panel_height
-
+	
 	local panel = wibox
 	{
 		ontop = true,
@@ -25,7 +25,7 @@ local bottom_panel = function(s)
 		width = dpi(s.geometry.width),
 		x = s.geometry.x,
 		y = panel_y,
-		bg = beautiful.background,
+		bg = beautiful.transparent,
 		fg = beautiful.fg_normal
 	}
 	
@@ -156,7 +156,7 @@ local bottom_panel = function(s)
 			local w = mouse.current_wibox
 			if w then
 				old_cursor, old_wibox = w.cursor, w
-				w.cursor = 'hand1'
+				w.cursor = 'left_ptr'
 			end
 		end
 	)
@@ -177,10 +177,11 @@ local bottom_panel = function(s)
 		objects = {s.clock_widget},
 		mode = 'outside',
 		delay_show = 1,
-		preferred_positions = {'right', 'left', 'top', 'bottom'},
-		preferred_alignments = {'middle'},
+		preferred_positions = {'top', 'left', 'right', 'bottom'},
+		preferred_alignments = {'middle', 'front', 'back'},
 		margin_leftright = dpi(8),
 		margin_topbottom = dpi(8),
+		bg = beautiful.widget_background,
 		timer_function = function()
 			local ordinal = nil
 
@@ -213,6 +214,8 @@ local bottom_panel = function(s)
 			return date_str
 
 		end,
+		align = 'right',
+		fg = beautiful.widget_fg,
 	}
 
 
@@ -237,6 +240,8 @@ local bottom_panel = function(s)
 		style_month       = { 
 			border_width    = dpi(0), 
 			padding         = dpi(20),
+			bg_color		= beautiful.widget_background,
+			fg_color		= beautiful.widget_fg,
 			shape           = function(cr, width, height)
 				gears.shape.partially_rounded_rect(
 					cr, width, height, true, true, true, true, beautiful.groups_radius
@@ -245,20 +250,25 @@ local bottom_panel = function(s)
 		},  
 		style_header      = { 
 			border_width    = 0, 
+			fg_color		= beautiful.widget_fg,
+
 			bg_color        = beautiful.transparent
 		},
 		style_weekday     = { 
 			border_width    = 0, 
+			fg_color		= beautiful.widget_fg,
 			bg_color        = beautiful.transparent
 		},
 
 		style_normal      = { 
 			border_width    = 0, 
+			fg_color		= beautiful.widget_fg,
 			bg_color        = beautiful.transparent
 		},
 		style_focus       = { 
 			border_width    = dpi(0), 
-			border_color    = beautiful.fg_normal, 
+			border_color    = beautiful.fg_normal,
+			fg_color		= beautiful.widget_fg, 
 			bg_color        = beautiful.accent, 
 			shape           = function(cr, width, height)
 				gears.shape.partially_rounded_rect(
@@ -295,11 +305,11 @@ local bottom_panel = function(s)
 		return wibox.widget {
 			{
 				widget,
-				border_width = dpi(1),
+				border_width = dpi(0),
         		border_color = '#ffffff30',
-				bg = beautiful.transparent,
+				bg_color = '#ffffff',
 				shape = function(cr, w, h)
-					gears.shape.rounded_rect(cr, w, h, dpi(12))
+					gears.shape.rounded_rect(cr, w, h, dpi(10))
 				end,
 				widget = wibox.container.background
 			},
@@ -309,17 +319,26 @@ local bottom_panel = function(s)
 		}
 	end
 
-	s.tray_toggler  = require('widget.tray-toggler')
-	--s.updater 		= require('widget.package-updater')()
-	--s.screen_rec 	= require('widget.screen-recorder')()
-	--s.music       	= require('widget.music')()
-	s.bluetooth   	= require('widget.bluetooth')()
+	local build_widget_no_bg = function(widget)
+		return wibox.widget {
+			{
+				widget,
+				border_width = dpi(0),
+				bg_color = '#00000000',
+				widget = wibox.container.background
+			},
+			top = dpi(1),
+			bottom = dpi(6),
+			bg_color = '#000000',
+			widget = wibox.container.margin
+		}
+	end
+	
+
 	s.network        	= require('widget.network')()
 	s.battery     	= require('widget.battery')()
 	s.search      	= require('widget.search-apps')()
-	s.end_session   = require('widget.end-session')()
-	s.side_settings = require('widget.side-settings')()
-	s.r_dashboard 	= require('layout.right-panel.right-panel-opener')()
+	s.control_center_toggle = require('widget.control-center-toggle')()
 
 
 	panel : setup {
@@ -332,32 +351,30 @@ local bottom_panel = function(s)
 					layout = wibox.layout.fixed.horizontal,
 					spacing = dpi(5),
 					build_widget(s.search),
-					--build_widget(s.music),
-					build_widget(s.side_settings),
-					build_widget(tag_list(s)),
-					build_widget(task_list(s)),
+					build_widget_no_bg(tag_list(s)),
 				},
-				s.add_button
-			}, 
-			nil,
+			},
 			{
 				layout = wibox.layout.fixed.horizontal,
-				spacing = dpi(5),
+				{
+					layout = wibox.layout.fixed.horizontal,
+					spacing = dpi(5),
+					build_widget_no_bg(task_list(s)),
+				},
+			},
+			{
+				layout = wibox.layout.fixed.horizontal,
+				spacing = dpi(2),
 				{
 					s.systray,
-					margins = dpi(5),
+					margins = dpi(2),
 					widget = wibox.container.margin
 				},
-				build_widget(s.tray_toggler),
-				build_widget(s.updater),
-				build_widget(s.screen_rec),
-				build_widget(s.bluetooth),
 				build_widget(s.network),
 				build_widget(s.battery),
-				build_widget(s.end_session),
-				build_widget(layout_box(s)),
 				build_widget(s.clock_widget),
-				build_widget(s.r_dashboard),
+				build_widget(layout_box(s)),
+				build_widget(s.control_center_toggle),
 			}
 		},
 		left = dpi(5),

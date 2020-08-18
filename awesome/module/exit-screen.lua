@@ -123,7 +123,7 @@ end
 
 local suspend_command = function()
 	awesome.emit_signal("module::exit_screen_hide")
-	awful.spawn.with_shell(apps.default.lock .. ' & systemctl suspend')
+	awful.spawn.with_shell(apps.default.lock .. ' & systemctl hibernate')
 end
 
 local exit_command = function()
@@ -161,7 +161,7 @@ reboot:connect_signal(
 	end
 )
 
-local suspend = build_button(icons.sleep, 'Sleep')
+local suspend = build_button(icons.sleep, 'Hibernate')
 suspend:connect_signal(
 	'button::release',
 	function()
@@ -195,7 +195,7 @@ screen.connect_signal(
 			type = 'splash',
 			visible = false,
 			ontop = true,
-			bg = beautiful.background,
+			bg = '#ffffff' .. 'aa',
 			fg = beautiful.fg_normal,
 			height = s.geometry.height,
 			width = s.geometry.width,
@@ -215,7 +215,7 @@ screen.connect_signal(
 			stop_event          = 'release',
 			keypressed_callback = function(self, mod, key, command) 
 
-				if key == 's' then
+				if key == 'h' then
 					suspend_command()
 
 				elseif key == 'e' then
@@ -224,7 +224,7 @@ screen.connect_signal(
 				elseif key == 'l' then
 					lock_command()
 
-				elseif key == 'p' then
+				elseif key == 's' then
 					poweroff_command()
 
 				elseif key == 'r' then

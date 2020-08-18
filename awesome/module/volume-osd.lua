@@ -35,9 +35,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			id 					= 'vol_osd_slider',
 			bar_shape           = gears.shape.rounded_rect,
 			bar_height          = dpi(2),
-			bar_color           = '#ffffff20',
-			bar_active_color	= '#f2f2f2EE',
-			handle_color        = '#ffffff',
+			bar_color           = beautiful.system_white_light .. '33',
+			bar_active_color	= beautiful.system_white_light .. 'ff',
+			handle_color        = beautiful.system_white_light .. 'ff',
 			handle_shape        = gears.shape.circle,
 			handle_width        = dpi(15),
 			handle_border_color = '#00000012',
@@ -65,13 +65,15 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			osd_value.text = volume_level .. '%'
 
 			-- Update the volume slider if values here change
-			awesome.emit_signal('widget::volume:update', volume_level)
+			
 		
 			if s.show_vol_osd then
 				awesome.emit_signal(
 					'module::volume_osd:show', 
 					true
 				)
+			else
+				awesome.emit_signal('widget::volume:update', volume_level)
 			end
 
 		end
@@ -86,7 +88,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 	vol_osd_slider:connect_signal(
 		'button::release',
 		function()
-			s.show_vol_osd = false
+			--s.show_vol_osd = false
 		end
 	)
 	vol_osd_slider:connect_signal(
@@ -143,6 +145,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 		offset = dpi(5),
 		shape = gears.shape.rectangle,
 		bg = beautiful.transparent,
+		fg = beautiful.widget_fg,
 		preferred_anchors = 'middle',
 		preferred_positions = {'left', 'right', 'top', 'bottom'},
 
@@ -167,7 +170,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			widget = wibox.container.margin
 
 		},
-		bg = beautiful.background,
+		bg = beautiful.system_black_light,
 		shape = gears.shape.rounded_rect,
 		widget = wibox.container.background()
 	}

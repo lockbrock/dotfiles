@@ -13,6 +13,15 @@ local apps = require('configuration.apps')
 local globalKeys = awful.util.table.join(
 
     -- Hotkeys
+    awful.key(
+        { modkey, },
+        "Delete",
+        function ()
+            awful.spawn('notify-send "Test notification" ', false)
+        end,
+        {description = "debug, send a notification", group = "client"}
+    ),
+
 
     awful.key(
         { modkey,}, 
@@ -169,19 +178,6 @@ local globalKeys = awful.util.table.join(
     ),
     awful.key(
         {modkey}, 
-        'w', 
-        awful.tag.viewprev, 
-        {description = 'view previous tag', group = 'tag'}
-    ),
-    
-    awful.key(
-        {modkey}, 
-        's', 
-        awful.tag.viewnext, 
-        {description = 'view next tag', group = 'tag'}
-    ),
-    awful.key(
-        {modkey}, 
         'Escape', 
         awful.tag.history.restore, 
         {description = 'alternate between current and previous tag', group = 'tag'}
@@ -289,22 +285,23 @@ local globalKeys = awful.util.table.join(
         'XF86AudioMute',
         function()
             awful.spawn('amixer -D pulse set Master 1+ toggle', false)
+
         end,
         {description = 'toggle mute', group = 'hotkeys'}
     ),
     awful.key(
-        {},
-        'XF86AudioNext',
+        {modkey},
+        'Next',
         function()
-            awful.spawn('mpc next', false)
+            awful.spawn('playerctl next', false)
         end,
         {description = 'next music', group = 'hotkeys'}
     ),
     awful.key(
-        {},
-        'XF86AudioPrev',
+        {modkey},
+        'Prior',
         function()
-            awful.spawn('mpc prev', false)
+            awful.spawn('playerctl previous', false)
         end,
         {description = 'previous music', group = 'hotkeys'}
     ),
@@ -355,7 +352,7 @@ local globalKeys = awful.util.table.join(
         function()
             _G.toggle_quake()
         end,
-        {description = 'dropdown application', group = 'launcher'}
+        {description = 'dropdown terminal', group = 'launcher'}
     ),
     awful.key(
         { }, 
@@ -366,8 +363,8 @@ local globalKeys = awful.util.table.join(
         {description = "fullscreen screenshot", group = 'Utility'}
     ),
     awful.key(
-        {modkey, "Shift"}, 
-        's',
+        {"Shift"}, 
+        'Print',
         function ()
             awful.spawn.easy_async_with_shell(apps.bins.area_screenshot,function() end)
         end,
@@ -422,7 +419,7 @@ local globalKeys = awful.util.table.join(
     ),
     awful.key(
         {modkey, "Shift"},
-        'l',
+        'b',
         function()
             awful.spawn(apps.default.lock, false)
         end,
@@ -480,75 +477,20 @@ local globalKeys = awful.util.table.join(
     ),
     awful.key(
         {modkey},
-        'r',
+        'b',
         function()
-            local focused = awful.screen.focused()
 
-            if focused.right_panel and focused.right_panel.visible then
-                focused.right_panel.visible = false
-            end
-            focused.left_panel:toggle()
         end,
-        {description = 'open sidebar', group = 'launcher'}
-    ),
-    awful.key(
-        {modkey, 'Shift'},
-        'r',
-        function()
-            local focused = awful.screen.focused()
-
-            if focused.right_panel and focused.right_panel.visible then
-                focused.right_panel.visible = false
-            end
-            focused.left_panel:toggle(true)
-        end,
-        {description = 'open sidebar and global search', group = 'launcher'}
-    ),
-    awful.key(
-        {modkey}, 
-        'F2',
-        function()
-            local focused = awful.screen.focused()
-
-            if focused.left_panel and focused.left_panel.opened then
-                focused.left_panel:toggle()
-            end
-
-            if focused.right_panel then
-                if _G.right_panel_mode == 'today_mode' or not focused.right_panel.visible then
-                    focused.right_panel:toggle()
-                    switch_rdb_pane('today_mode')
-                else
-                    switch_rdb_pane('today_mode')
-                end
-
-                _G.right_panel_mode = 'today_mode'
-            end
-        end,
-        {description = "open notification center", group = 'launcher'}
+        {description = 'open notifications on info', group = 'launcher'}
     ),
     awful.key(
         {modkey}, 
         'n',
         function()
             local focused = awful.screen.focused()
-
-            if focused.left_panel and focused.left_panel.opened then
-                focused.left_panel:toggle()
-            end
-
-            if focused.right_panel then
-                if _G.right_panel_mode == 'notif_mode' or not focused.right_panel.visible then
-                    focused.right_panel:toggle()
-                    switch_rdb_pane('notif_mode')
-                else
-                    switch_rdb_pane('notif_mode')
-                end
-
-                _G.right_panel_mode = 'notif_mode'
-            end
+			focused.control_center:toggle()
         end,
-        {description = "open today pane", group = 'launcher'}
+        {description = "open notification on cc", group = 'launcher'}
     )
 )
 

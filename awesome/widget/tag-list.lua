@@ -2,6 +2,8 @@ local awful = require('awful')
 local wibox = require('wibox')
 local dpi = require('beautiful').xresources.apply_dpi
 local capi = {button = _G.button}
+local gears = require('gears')
+
 local clickable_container = require('widget.clickable-container')
 local modkey = require('configuration.keys.mod').modKey
 --- Common method to create buttons.
@@ -54,8 +56,8 @@ local function list_update(w, buttons, label, data, objects)
 			bgb = wibox.container.background()
 			tbm = wibox.widget {
 				tb,
-				left = dpi(4),
-				right = dpi(16),
+				left = dpi(12),
+				right = dpi(12),
 				widget = wibox.container.margin
 			}
 			ibm = wibox.widget {
@@ -68,8 +70,8 @@ local function list_update(w, buttons, label, data, objects)
 
 			-- All of this is added in a fixed widget
 			l:fill_space(true)
-			l:add(ibm)
-			-- l:add(tbm)
+			l:add(tbm)
+			--l:add(ibm)
 			bg_clickable:set_widget(l)
 
 			-- And all of this gets a background
@@ -108,8 +110,7 @@ local function list_update(w, buttons, label, data, objects)
 		else
 			ibm:set_margins(0)
 		end
-
-		bgb.shape = args.shape
+		bgb.shape = gears.shape.circle
 		bgb.shape_border_width = args.shape_border_width
 		bgb.shape_border_color = args.shape_border_color
 
@@ -164,9 +165,12 @@ local TagList = function(s)
 				end
 			)
 		),
-		{},
+		{
+			spacing = dpi(3)
+		},
 		list_update,
 		wibox.layout.fixed.horizontal()
+		
 	)
 end
 return TagList
