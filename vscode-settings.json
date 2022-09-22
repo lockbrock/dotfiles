@@ -1,0 +1,16 @@
+{
+    "terminal.integrated.profiles.linux": {
+        "zsh": {
+            "path": "zsh",
+            "args": [
+                "-l"
+            ]
+        },
+        "bash": {
+            "path": "bash"
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "git.path": "/usr/bin/git",
+    "terminal.integrated.enableBell": true
+}
