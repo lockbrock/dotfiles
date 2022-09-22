@@ -11,7 +11,7 @@ create_symlinks() {
     for file in $files; do
         name=$(basename $file)
         echo "Creating symlink to $name in home directory."
-        rm -rf ~/$name
+        mv ~/$name ~/$name.old
         ln -s $script_dir/$name ~/$name
     done
 }
