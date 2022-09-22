@@ -28,6 +28,16 @@ setup_vs_code_settings() {
     fi
 }
 
+# Display a machine name pop-up on shell launch for remote servers
+add_machine_name_motd(){
+    if [ ! -f "$HOME/.motd" ] && [ -d "$HOME/.vscode-server" ]
+    then
+        echo "Adding MOTD"
+        echo "$(figlet -w 40 -c -f $script_dir/Bulbhead.flf $HOSTNAME)" > "$HOME/.motd"
+        echo "" >> "$HOME/.motd"
+    fi
+}
+
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
@@ -35,3 +45,4 @@ create_symlinks
 
 # Add VS Code remote settings (if applicable)
 setup_vs_code_settings
+add_machine_name_motd
