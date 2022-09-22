@@ -30,10 +30,10 @@ setup_vs_code_settings() {
 
 # Display a machine name pop-up on shell launch for remote servers
 add_machine_name_motd(){
-    if [ ! -f "$HOME/.motd" ] && ([ -d "$HOME/.vscode-server" ] || [ "$DOTFILES_USE_MOTD" == "true" ])
+    if [ ! -f "$HOME/.motd" ] && [ -x "$(command -v figlet)" ] && ([ -d "$HOME/.vscode-server" ] || [ "$DOTFILES_USE_MOTD" == "true" ])
     then
         echo "Adding MOTD"
-        echo "$(figlet -w 40 -c -f $script_dir/Bulbhead.flf $HOSTNAME)" > "$HOME/.motd"
+        echo "$(figlet -f $script_dir/Bulbhead.flf $HOSTNAME)" > "$HOME/.motd"
         echo "" >> "$HOME/.motd"
     fi
 }
